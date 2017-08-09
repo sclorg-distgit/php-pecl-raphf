@@ -12,39 +12,30 @@
 # Please, preserve the changelog entries
 #
 %if 0%{?scl:1}
-%if "%{scl}" == "rh-php56"
-%global sub_prefix sclo-php56-
+%if "%{scl}" == "rh-php70"
+%global sub_prefix sclo-php70-
 %else
 %global sub_prefix sclo-%{scl_prefix}
 %endif
+%scl_package        php-pecl-raphf
 %endif
-
-%{?scl:          %scl_package        php-pecl-raphf}
-%{!?php_inidir:  %global php_inidir  %{_sysconfdir}/php.d}
-%{!?php_incldir: %global php_incldir %{_includedir}/php}
-%{!?__pecl:      %global __pecl      %{_bindir}/pecl}
-%{!?__php:       %global __php       %{_bindir}/php}
 
 %global pecl_name  raphf
 # tests disabled because of circular dependency on pecl/http
 # tests requires pecl/http 2.0.0
 %global with_tests %{?_with_tests:1}%{!?_with_tests:0}
-%if "%{php_version}" < "5.6"
-%global ini_name  %{pecl_name}.ini
-%else
 %global ini_name  40-%{pecl_name}.ini
-%endif
 
 Summary:        Resource and persistent handles factory
 Name:           %{?sub_prefix}php-pecl-%{pecl_name}
-Version:        1.1.2
+Version:        2.0.0
 Release:        1%{?dist}
 License:        BSD
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
 Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}%{?prever}.tgz
 
-BuildRequires:  %{?scl_prefix}php-devel > 5.3
+BuildRequires:  %{?scl_prefix}php-devel > 7
 BuildRequires:  %{?scl_prefix}php-pear
 %if %{with_tests}
 BuildRequires:  %{?scl_prefix}php-pecl-http >= 2.0.0
@@ -184,12 +175,14 @@ REPORT_EXIT_STATUS=1 \
 %{php_extdir}/%{pecl_name}.so
 
 %files devel
-%defattr(-,root,root,-)
 %doc %{pecl_testdir}/%{pecl_name}
 %{php_incldir}/ext/%{pecl_name}
 
 
 %changelog
+* Thu Nov  3 2016 Remi Collet <remi@fedoraproject.org> - 2.0.0-1
+- update to 2.0.0 for PHP 7
+
 * Tue Jan 19 2016 Remi Collet <remi@fedoraproject.org> - 1.1.2-1
 - cleanup for SCLo build
 
