@@ -5,17 +5,22 @@
 #
 # Fedora spec file for php-pecl-raphf
 #
-# Copyright (c) 2013-2016 Remi Collet
+# Copyright (c) 2013-2018 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
 # Please, preserve the changelog entries
 #
 %if 0%{?scl:1}
+%global sub_prefix sclo-%{scl_prefix}
 %if "%{scl}" == "rh-php70"
 %global sub_prefix sclo-php70-
-%else
-%global sub_prefix sclo-%{scl_prefix}
+%endif
+%if "%{scl}" == "rh-php71"
+%global sub_prefix sclo-php71-
+%endif
+%if "%{scl}" == "rh-php72"
+%global sub_prefix sclo-php72-
 %endif
 %scl_package        php-pecl-raphf
 %endif
@@ -29,7 +34,7 @@
 Summary:        Resource and persistent handles factory
 Name:           %{?sub_prefix}php-pecl-%{pecl_name}
 Version:        2.0.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 License:        BSD
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
@@ -180,6 +185,12 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Thu Nov 15 2018 Remi Collet <remi@remirepo.net> - 2.0.0-3
+- build for sclo-php72
+
+* Wed Aug  9 2017 Remi Collet <remi@fedoraproject.org> - 2.0.0-2
+- minor change for sclo-php71
+
 * Thu Nov  3 2016 Remi Collet <remi@fedoraproject.org> - 2.0.0-1
 - update to 2.0.0 for PHP 7
 
